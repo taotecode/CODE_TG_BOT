@@ -1,0 +1,39 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">命令名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="command" class="layui-input" lay-verify="required" placeholder="请输入命令名称" value="{$row.command|default=''}">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">命令描述</label>
+            <div class="layui-input-block">
+                <textarea name="description" class="layui-textarea" lay-verify="required" placeholder="请输入命令描述">{$row.description|default=''}</textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">命令指向控制器</label>
+            <div class="layui-input-block">
+                <input type="text" name="call_controller" class="layui-input" lay-verify="required" placeholder="请输入命令指向控制器" value="{$row.call_controller|default=''}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">命令指向方法</label>
+            <div class="layui-input-block">
+                <input type="text" name="call_action" class="layui-input" lay-verify="required" placeholder="请输入命令指向方法" value="{$row.call_action|default=''}">
+            </div>
+        </div>
+
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>

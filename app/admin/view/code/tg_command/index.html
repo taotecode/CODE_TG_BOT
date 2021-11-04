@@ -1,0 +1,18 @@
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <blockquote class="layui-elem-quote layui-quote-nm">添加新的命令请联系管理员对机器人执行添加</blockquote>
+        <fieldset class="layui-elem-field">
+            <legend>命令添加</legend>
+            <div class="layui-field-box">
+                <p>给<b>@BotFather</b>发送命令<b>/setcommands</b>选择机器人后再把下面的复制发送</p><br>
+                {$commandAdd|raw}
+            </div>
+        </fieldset>
+        <table id="currentTable" class="layui-table layui-hide"
+               data-auth-add="{:auth('code.tg_command/add')}"
+               data-auth-edit="{:auth('code.tg_command/edit')}"
+               data-auth-delete="{:auth('code.tg_command/delete')}"
+               lay-filter="currentTable">
+        </table>
+    </div>
+</div>

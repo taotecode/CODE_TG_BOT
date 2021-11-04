@@ -1,0 +1,51 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">关联命令</label>
+            <div class="layui-input-block">
+                <select name="command_id" lay-verify="required" data-select="{:url('code.tg_command/index')}" data-fields="id,command">
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">存储时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="storage_time" class="layui-input" lay-verify="required" placeholder="请输入存储时间" value="{$row.storage_time|default='Ym'}">
+                <tip>不建议修改。请使用MySQL DATETIME 格式,如：Ymd。Y代表年,m代表月,d代表天</tip>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">code存储时间</label>
+            <div class="layui-input-block">
+                <input type="number" name="code_time" class="layui-input" lay-verify="required" placeholder="请输入code存储时间" value="{$row.code_time|default='7'}">
+                <tip>单位：天，超过指定天数将清空码库</tip>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">每天投放次数</label>
+            <div class="layui-input-block">
+                <input type="number" name="number" class="layui-input" placeholder="请输入每天投放次数" value="{$row.number|default='5'}">
+                <tip>每个用户每天的码字投放次数，达到指定次数将不再投放。</tip>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户拉取次数</label>
+            <div class="layui-input-block">
+                <input type="number" name="pull_number" class="layui-input" placeholder="请输入用户拉取次数" value="{$row.pull_number|default='3'}">
+                <tip>每个用户达到指定拉取码次数，才会将该用户的码投放出去。为0即不需要，按概率投放用户的码</tip>
+            </div>
+        </div>
+
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+
+    </form>
+</div>
