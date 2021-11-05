@@ -19,6 +19,16 @@
 
 ## 代码仓库
 
-* GitHub地址：[https://github.com/zhongshaofa/easyadmin](https://github.com/zhongshaofa/easyadmin)
+* GitHub地址：[https://github.com/yuanzhumc/CODE_TG_BOT](https://github.com/yuanzhumc/CODE_TG_BOT)
 
-* Gitee地址：[https://gitee.com/zhongshaofa/easyadmin](https://gitee.com/zhongshaofa/easyadmin)
+* Gitee地址：[https://gitee.com/yuanzhumc/CODE_TG_BOT](https://gitee.com/yuanzhumc/CODE_TG_BOT)
+
+## 安装方法
+### 环境要求
+Centos>=7
+php>=7.3
+mysql>=8
+### 必要软件
+crontab
+redis
+Supervisor
