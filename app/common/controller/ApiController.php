@@ -290,8 +290,12 @@ class ApiController extends BaseController
         }
     }
 
-    protected function getToken(){
+    protected function getTgToken(){
         return sysconfig('tg_bot','tg_token');
+    }
+
+    protected function getTgUserName(){
+        return sysconfig('tg_bot','tg_name');
     }
 
 }

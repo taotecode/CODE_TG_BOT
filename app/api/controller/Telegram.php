@@ -14,6 +14,10 @@
 
 namespace app\api\controller;
 
+use app\admin\model\TgChat;
+use Longman\TelegramBot\Exception\TelegramException;
+use Longman\TelegramBot\Request;
+use Longman\TelegramBot\Telegram as TelegramBot;
 use app\admin\model\AuthTgGroup;
 use app\admin\model\SystemCommand;
 use app\admin\model\TgUser;
@@ -27,17 +31,20 @@ class Telegram extends ApiController
     protected $authTgGroup;
     protected $systemCommand;
     protected $tgUser;
+    protected $tgChat;
 
     public function __construct(
         App $app,
         AuthTgGroup $authTgGroup,
         SystemCommand $systemCommand,
-        TgUser $tgUser
+        TgUser $tgUser,
+        TgChat $tgChat
     ){
         parent::__construct($app);
         $this->authTgGroup = $authTgGroup;
         $this->systemCommand = $systemCommand;
         $this->tgUser = $tgUser;
+        $this->tgChat = $tgChat;
     }
 
     public function receiveMessages(){
@@ -128,7 +135,16 @@ class Telegram extends ApiController
 
         //return $this->sendMessages($chatId,$messageData,$messageId);
         //将其它消息记录下来
-        return 'success';
+        $this->tgChat->save([
+            'chat_id'=>$chatId,
+            'chat_username'=>$input['message']['chat']['username'],
+            'chat_type'=>$chatType,
+            'from_id'=>$messageUser['id'],
+            'form_username'=>$messageUser['username'],
+            'text'=>$messageData,
+            'original_data'=>json_encode($input),
+        ]);
+        return 'true';
     }
 
 
@@ -140,13 +156,22 @@ class Telegram extends ApiController
      * @return bool|string
      */
     private function sendMessages($chat_id,$text,$message_id=null){
-        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/sendmessage';
-        $data = [
-            'chat_id' => $chat_id,
-            'text'=>$text,
-            'reply_to_message_id'=>$message_id,
-        ];
-        return curl_post($url, $data);
+        try {
+            new TelegramBot($this->getTgToken(), $this->getTgUserName());
+            $data = [
+                'chat_id' => $chat_id,
+                'text'    => htmlspecialchars_decode($text),
+                'reply_to_message_id'=>$message_id,
+                'parse_mode'=>'',
+            ];
+            $result = Request::sendMessage($data);
+            if ($result->isOk()) {
+                return true;
+            }
+            return false;
+        } catch (TelegramException $e) {
+            return false;
+        }
     }
 
     /**
@@ -157,14 +182,22 @@ class Telegram extends ApiController
      * @return bool|string
      */
     private function sendMessagesHtml($chat_id,$text,$message_id=null){
-        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/sendmessage';
-        $data = [
-            'chat_id' => $chat_id,
-            'text'=>htmlspecialchars_decode($text),
-            'reply_to_message_id'=>$message_id,
-            'parse_mode'=>'HTML',
-        ];
-        return curl_post($url, $data);
+        try {
+            new TelegramBot($this->getTgToken(), $this->getTgUserName());
+            $data = [
+                'chat_id' => $chat_id,
+                'text'    => htmlspecialchars_decode($text),
+                'reply_to_message_id'=>$message_id,
+                'parse_mode'=>'HTML',
+            ];
+            $result = Request::sendMessage($data);
+            if ($result->isOk()) {
+                return true;
+            }
+            return false;
+        } catch (TelegramException $e) {
+            return false;
+        }
     }
 
     /**
@@ -175,14 +208,22 @@ class Telegram extends ApiController
      * @return bool|string
      */
     private function sendMessagesMarkDown($chat_id,$text,$message_id=null){
-        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/sendmessage';
-        $data = [
-            'chat_id' => $chat_id,
-            'text'=>htmlspecialchars_decode($text),
-            'reply_to_message_id'=>$message_id,
-            'parse_mode'=>'markdown',
-        ];
-        return curl_post($url, $data);
+        try {
+            new TelegramBot($this->getTgToken(), $this->getTgUserName());
+            $data = [
+                'chat_id' => $chat_id,
+                'text'    => htmlspecialchars_decode($text),
+                'reply_to_message_id'=>$message_id,
+                'parse_mode'=>'markdown',
+            ];
+            $result = Request::sendMessage($data);
+            if ($result->isOk()) {
+                return true;
+            }
+            return false;
+        } catch (TelegramException $e) {
+            return false;
+        }
     }
 
     /**
@@ -192,17 +233,19 @@ class Telegram extends ApiController
      * @return bool
      */
     private function checkGroup($user_id,$chat_id){
-        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/getChatMember';
-        $data = [
-            'chat_id'=>$chat_id,
-            'user_id'=>$user_id,
-        ];
-        $result = curl_post($url, $data);
-        $result=json_decode($result,true);
-        if ($result['error_code']??0===400){
+        try {
+            new TelegramBot($this->getTgToken(), $this->getTgUserName());
+            $data = [
+                'chat_id'=>$chat_id,
+                'user_id'=>$user_id,
+            ];
+            $result = Request::getChatMember($data);
+            if ($result->isOk()) {
+                return true;
+            }
             return false;
-        }else{
-            return true;
+        } catch (TelegramException $e){
+            return false;
         }
     }
 }

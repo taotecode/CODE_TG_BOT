@@ -18,6 +18,9 @@ use app\admin\traits\Curd;
 use app\common\controller\AdminController;
 use EasyAdmin\annotation\ControllerAnnotation;
 use EasyAdmin\annotation\NodeAnotation;
+use Longman\TelegramBot\Exception\TelegramException;
+use Longman\TelegramBot\Request;
+use Longman\TelegramBot\Telegram;
 use think\App;
 use think\facade\Env;
 /**
@@ -47,7 +50,7 @@ class TgUser extends AdminController
             $this->validate($post, $rule);
             foreach ($row as $item){
                 $result=$this->sendMessages($item->tg_id,$post['text']);
-                if ($result['error_code']??0===400){
+                if (!$result){
                     $this->error('发送失败,ID:'.$item->tg_id);
                 }
             }
@@ -65,13 +68,22 @@ class TgUser extends AdminController
      * @return bool|string
      */
     private function sendMessages($chat_id,$text,$message_id=null){
-        $url = 'https://api.telegram.org/bot' . $this->getTgToken() . '/sendmessage';
-        $data = [
-            'chat_id' => $chat_id,
-            'text'=>htmlspecialchars_decode($text),
-            'reply_to_message_id'=>$message_id,
-            'parse_mode'=>'markdown',
-        ];
-        return curl_post($url, $data);
+        try {
+            new Telegram($this->getTgToken(), $this->getTgUserName());
+            $data = [
+                'chat_id' => $chat_id,
+                'text'    => htmlspecialchars_decode($text),
+                'reply_to_message_id'=>$message_id,
+                'parse_mode'=>'markdown',
+            ];
+            $result = Request::sendMessage($data);
+
+            if ($result->isOk()) {
+                return true;
+            }
+            return false;
+        } catch (TelegramException $e) {
+            return $e->getMessage();
+        }
     }
 }

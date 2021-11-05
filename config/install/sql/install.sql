@@ -376,6 +376,7 @@ INSERT INTO `cd_system_menu` VALUES (255, 254, '码库类型', 'fa fa-list', 'co
 INSERT INTO `cd_system_menu` VALUES (256, 254, '命令管理', 'fa fa-list', 'code.tg_command/index', '', '_self', 0, 1, '', 1635994472, 1635994472, NULL);
 INSERT INTO `cd_system_menu` VALUES (257, 254, '授权群组', 'fa fa-list', 'code.tg_group/index', '', '_self', 0, 1, '', 1636013712, 1636013712, NULL);
 INSERT INTO `cd_system_menu` VALUES (258, 254, 'TG用户', 'fa fa-list', 'code.tg_user/index', '', '_self', 0, 1, '', 1636079486, 1636079486, NULL);
+INSERT INTO `cd_system_menu` VALUES (259, 254, 'tg聊天列表', 'fa fa-list', 'code.tg_chat/index', '', '_self', 0, 1, '', 1636096040, 1636096040, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -497,6 +498,13 @@ INSERT INTO `cd_system_node` VALUES (96, 'code.tg_user/delete', '删除', 2, 1, 
 INSERT INTO `cd_system_node` VALUES (97, 'code.tg_user/export', '导出', 2, 1, 1636014757, 1636014757);
 INSERT INTO `cd_system_node` VALUES (98, 'code.tg_user/modify', '属性修改', 2, 1, 1636014757, 1636014757);
 INSERT INTO `cd_system_node` VALUES (99, 'system.config/setWebhook', '设置Webhook', 2, 1, 1636075022, 1636075022);
+INSERT INTO `cd_system_node` VALUES (100, 'code.tg_chat', 'tg聊天列表', 1, 1, 1636095873, 1636095873);
+INSERT INTO `cd_system_node` VALUES (101, 'code.tg_chat/index', '列表', 2, 1, 1636095873, 1636095873);
+INSERT INTO `cd_system_node` VALUES (102, 'code.tg_chat/add', '添加', 2, 1, 1636095873, 1636095873);
+INSERT INTO `cd_system_node` VALUES (103, 'code.tg_chat/edit', '编辑', 2, 1, 1636095873, 1636095873);
+INSERT INTO `cd_system_node` VALUES (104, 'code.tg_chat/delete', '删除', 2, 1, 1636095873, 1636095873);
+INSERT INTO `cd_system_node` VALUES (105, 'code.tg_chat/export', '导出', 2, 1, 1636095873, 1636095873);
+INSERT INTO `cd_system_node` VALUES (106, 'code.tg_chat/modify', '属性修改', 2, 1, 1636095873, 1636095873);
 COMMIT;
 
 -- ----------------------------
