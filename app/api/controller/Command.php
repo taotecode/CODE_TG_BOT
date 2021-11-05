@@ -78,6 +78,7 @@ class Command extends ApiController
         }
         //获取码类型
         $codeType=$this->codeType->where('command_id',$commandData['id'])->with('SystemCommand')->find();
+        Log::info(json_encode($codeType));
         //设置存储时间
         $this->codeTableService->tableSuffix=date($codeType['storage_time'], time());
         //设置表名
