@@ -123,14 +123,16 @@ class Telegram extends ApiController
             $command=substr($messageData, 1);
             $command=explode(" ",$command);
             $commandData=$this->systemCommand->where('command','LIKE','%'.$command[0].'%')->find();
-            if (empty($commandData)){
+            if (empty($commandData)&&$chatType==='private'){
                 return $this->sendMessages($chatId,'不是正确的命令，请输入 /help 查看命令',$messageId);
             }
-            $call=invoke([$commandData->call_controller,$commandData->call_action],[$command[1]??'',$input,$commandData]);
-            if (is_array($call)){
-                return $this->sendMessagesMarkDown($chatId,$call['text'],$messageId);
+            if ($commandData){
+                $call=invoke([$commandData->call_controller,$commandData->call_action],[$command[1]??'',$input,$commandData]);
+                if (is_array($call)){
+                    return $this->sendMessagesMarkDown($chatId,$call['text'],$messageId);
+                }
+                return $this->sendMessages($chatId,$call,$messageId);
             }
-            return $this->sendMessages($chatId,$call,$messageId);
         }
 
         //return $this->sendMessages($chatId,$messageData,$messageId);
