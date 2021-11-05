@@ -19,6 +19,11 @@
             <label class="layui-form-label">自动回复内容</label>
             <div class="layui-input-block">
                 <textarea name="text" rows="20" class="layui-textarea editor" placeholder="请输入自动回复内容"></textarea>
+                <tip>
+                    该项可为空，如果需要自动回复内容，是支持HTML格式（编辑器已自带HTML）<br>
+                    如果需要自动回复内容，请在命令指向控制器内填写<b>app\api\controller\Command</b><br>
+                    如果需要自动回复内容，请在命令指向方法内填写<b>message</b><br>
+                </tip>
             </div>
         </div>
 
@@ -26,6 +31,10 @@
             <label class="layui-form-label">命令指向控制器</label>
             <div class="layui-input-block">
                 <input type="text" name="call_controller" class="layui-input" lay-verify="required" placeholder="请输入命令指向控制器" value="{$row.call_controller|default=''}">
+                <tip>
+                    需要自定义命令请在app/api/controller/Command自行添加方法<br>
+                    如果该命令为码，请输入<b>app\api\controller\Command</b>
+                </tip>
             </div>
         </div>
 
@@ -33,6 +42,11 @@
             <label class="layui-form-label">命令指向方法</label>
             <div class="layui-input-block">
                 <input type="text" name="call_action" class="layui-input" lay-verify="required" placeholder="请输入命令指向方法" value="{$row.call_action|default=''}">
+                <tip>
+                    需要自定义命令请在app/api/controller/Command自行添加方法<br>
+                    如果该命令为码，请输入<b>code</b>
+                    如果该命令为自动回复，请输入<b>message</b>
+                </tip>
             </div>
         </div>
 
