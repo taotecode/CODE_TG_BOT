@@ -43,7 +43,7 @@ class Telegram extends ApiController
     public function receiveMessages(){
         $input = file_get_contents('php://input');
         $input = json_decode($input, true);
-        //Log::info(json_encode($input));
+        Log::info(json_encode($input));
 
         //获取发送类型
         $chatType=$input['message']['chat']['type']??'';
