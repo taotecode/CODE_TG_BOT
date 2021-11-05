@@ -101,7 +101,7 @@ class Telegram extends ApiController
                 'last_name'=>$messageUser['last_name'],
                 'first_name'=>$messageUser['first_name'],
                 'username'=>$messageUser['username'],
-                'language_code'=>$messageUser['language_code'],
+                'language_code'=>$messageUser['language_code']??'',
             ]);
         }
 
