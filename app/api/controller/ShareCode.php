@@ -21,6 +21,7 @@ use app\api\service\CodeTableService;
 use app\common\controller\ApiController;
 use think\App;
 use think\facade\Cache;
+use think\facade\Db;
 use think\facade\Queue;
 
 class ShareCode extends ApiController
@@ -56,6 +57,11 @@ class ShareCode extends ApiController
         }
         $codeType=$systemCommand->CodeType;
         $tableName='code_'.date($codeType->storage_time, time()).'_'.$type;
+        //先检查是否存在该表
+        $check = Db::query("show tables like '{$tableName}'");
+        if (empty($check)) {
+            return show(4000,'码库无码，请到tg进行添加！');
+        }
         $this->model=new Code();
         $this->model->setTableName($tableName);
         //检查用户是否添加助力码
