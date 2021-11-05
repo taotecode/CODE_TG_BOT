@@ -40,15 +40,17 @@ class TgGroup extends AdminController
      * @NodeAnotation(title="发送TG消息")
      */
     public function send_msg($id){
-        $row = $this->model->find($id);
-        empty($row) && $this->error('数据不存在');
+        $row = $this->model->whereIn('id', $id)->select();
+        $row->isEmpty() && $this->error('数据不存在');
         if ($this->request->isPost()) {
             $post = $this->request->post();
             $rule = [];
             $this->validate($post, $rule);
-            $result=$this->sendMessages($row->chat_id,$post['text']);
-            if ($result['error_code']??0===400){
-                $this->error('发送失败');
+            foreach ($row as $item){
+                $result=$this->sendMessages($item->tg_id,$post['text']);
+                if ($result['error_code']??0===400){
+                    $this->error('发送失败,ID:'.$item->tg_id);
+                }
             }
             $this->success('发送成功');
         }

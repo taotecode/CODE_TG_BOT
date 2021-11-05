@@ -19,6 +19,16 @@ define(["jquery", "easy-admin","laymd"], function ($, ea) {
         index: function () {
             ea.table.render({
                 init: init,
+                toolbar: ['refresh','add'
+                    [{
+                    text: '群发消息',
+                    url: init.send_msg_url,
+                    method: 'open',
+                    auth: 'send_msg',
+                    class: 'layui-btn layui-btn-normal layui-btn-sm',
+                    icon: 'fa fa-envelope',
+                }],
+                    'delete', 'export'],
                 cols: [[
                     {type: "checkbox"},
                     {field: 'id', width: 80, title: 'ID'},
