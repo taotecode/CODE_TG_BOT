@@ -54,7 +54,7 @@ class Telegram extends ApiController
         //用户信息
         $messageUser=$input['message']['from'];
         //消息内容
-        $messageData=$input['message']['text'];
+        $messageData=$input['message']['text']??'';
 
         //验证消息通道是否授权
         if ($chatType === 'private'){
@@ -80,6 +80,20 @@ class Telegram extends ApiController
             $this->sendMessages($chatId,'您发送的消息通道有误。',$messageId);
         }
 
+        if (!empty($input['new_chat_participant'])||!empty($input['new_chat_member'])){
+            //判断用户是否加入
+            if (!$this->tgUser->where('tg_id',$messageUser['id'])->find()){
+                $this->tgUser->save([
+                    'tg_id'=>$messageUser['id'],
+                    'last_name'=>$messageUser['last_name'],
+                    'first_name'=>$messageUser['first_name'],
+                    'username'=>$messageUser['username'],
+                    'language_code'=>$messageUser['language_code'],
+                ]);
+            }
+            $this->sendMessages($chatId,'您发送的消息通道有误。',$messageId);
+        }
+
         //判断用户是否加入
         if (!$this->tgUser->where('tg_id',$messageUser['id'])->find()){
             $this->tgUser->save([
@@ -100,8 +114,8 @@ class Telegram extends ApiController
                 return $this->sendMessages($chatId,'不是正确的命令，请输入 /help 查看命令',$messageId);
             }
             $call=invoke([$commandData->call_controller,$commandData->call_action],[$command[1]??'',$input,$commandData]);
-            if ($call['html']??false===true){
-                return $this->sendMessagesMarkDown($chatId,$call,$messageId);
+            if (is_array($call)){
+                return $this->sendMessagesMarkDown($chatId,$call['text'],$messageId);
             }
             return $this->sendMessages($chatId,$call,$messageId);
         }

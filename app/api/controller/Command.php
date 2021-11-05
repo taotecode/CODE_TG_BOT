@@ -20,6 +20,7 @@ use app\api\service\CodeTableService;
 use app\common\controller\ApiController;
 use think\App;
 use think\facade\Log;
+use function Symfony\Component\Translation\t;
 
 class Command extends ApiController
 {
@@ -55,10 +56,10 @@ class Command extends ApiController
      * @param null $messageData
      * @param array $input
      * @param array $commandData
-     * @return string
+     * @return array|string
      */
     public function message($messageData=null,$input=[],$commandData=[]){
-        return $commandData->text;
+        return ['md'=>true,'text'=>$commandData->text];
     }
 
     /**
