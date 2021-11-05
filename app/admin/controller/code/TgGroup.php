@@ -50,9 +50,9 @@ class TgGroup extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             foreach ($row as $item){
-                $result=$this->sendMessages($item->tg_id,$post['text']);
+                $result=$this->sendMessages($item->chat_id,$post['text']);
                 if (!$result){
-                    $this->error('发送失败,ID:'.$item->tg_id);
+                    $this->error('发送失败,ID:'.$item->chat_id);
                 }
             }
             $this->success('发送成功');
@@ -66,7 +66,7 @@ class TgGroup extends AdminController
      * @param $chat_id
      * @param $text
      * @param null $message_id
-     * @return bool|string
+     * @return bool
      */
     private function sendMessages($chat_id,$text,$message_id=null){
         try {
@@ -84,7 +84,7 @@ class TgGroup extends AdminController
             }
             return false;
         } catch (TelegramException $e) {
-            return false;
+            return $e->getMessage();
         }
     }
 }
