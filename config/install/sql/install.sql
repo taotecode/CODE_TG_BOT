@@ -271,7 +271,7 @@ CREATE TABLE `cd_system_command` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `cd_system_command` VALUES (1, 'test', '这是一条测试命令', NULL, 'app\\api\\controller\\Command', 'test', NULL);
-INSERT INTO `cd_system_command` VALUES (2, 'help', '使用帮助', '&lt;p&gt;支持车型：种豆、东东农场、东东工厂、京喜工厂、东东萌宠、闪购盲盒、狂欢城、财富岛、健康。&lt;br /&gt;\n例:&lt;br /&gt;\nPHP_EOL&lt;br /&gt;\n/bean code111&lt;br /&gt;\nPHP_EOL&lt;br /&gt;\n支持多code上车&lt;br /&gt;\nPHP_EOL&lt;br /&gt;\n/bean code111&amp;amp;code222&amp;amp;code333&lt;br /&gt;\nPHP_EOL&lt;br /&gt;\n欢迎订阅本频道，获取更多消息。&lt;/p&gt;\n', 'app\\api\\controller\\Command', 'message', NULL);
+INSERT INTO `cd_system_command` VALUES (2, 'help', '使用帮助', '支持车型：种豆、东东农场、东东工厂、京喜工厂、东东萌宠、闪购盲盒、狂欢城、财富岛、健康。\n例:\n/pet code111\n或\n/pet code111&code222&code333\n欢迎订阅本频道，获取更多消息。\n', 'app\\api\\controller\\Command', 'message', NULL);
 INSERT INTO `cd_system_command` VALUES (3, 'pet', '提交东东萌宠', NULL, 'app\\api\\controller\\Command', 'code', NULL);
 COMMIT;
 

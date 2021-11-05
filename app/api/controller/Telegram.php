@@ -138,7 +138,7 @@ class Telegram extends ApiController
         $url = 'https://api.telegram.org/bot' . $this->getToken() . '/sendmessage';
         $data = [
             'chat_id' => $chat_id,
-            'text'=>$text,
+            'text'=>htmlspecialchars_decode($text),
             'reply_to_message_id'=>$message_id,
             'parse_mode'=>'HTML',
         ];
@@ -156,7 +156,7 @@ class Telegram extends ApiController
         $url = 'https://api.telegram.org/bot' . $this->getToken() . '/sendmessage';
         $data = [
             'chat_id' => $chat_id,
-            'text'=>$text,
+            'text'=>htmlspecialchars_decode($text),
             'reply_to_message_id'=>$message_id,
             'parse_mode'=>'markdown',
         ];
