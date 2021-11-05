@@ -71,7 +71,7 @@ class Telegram extends ApiController
             if ($isGroup===false){
                 return $this->sendMessages($chatId,'您未加入任何所授权的群组！',$messageId);
             }
-        }elseif ($chatType === 'group'){
+        }elseif ($chatType === 'group'||$chatType==='supergroup'){
             //检查用户是否在授权群组
             if (!$this->authTgGroup->where('chat_id',$chatId)->find()){
                 return $this->sendMessages($chatId,'您所在的群组未被授权！'.PHP_EOL.'请进入以授权的群组内',$messageId);

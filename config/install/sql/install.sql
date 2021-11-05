@@ -36,7 +36,7 @@ CREATE TABLE `cd_auth_tg_group` (
 -- Records of cd_auth_tg_group
 -- ----------------------------
 BEGIN;
-INSERT INTO `cd_auth_tg_group` VALUES (1, '-670733478', 'CODE_TG_BOT程序', 1635152143, 1635152143, NULL);
+INSERT INTO `cd_auth_tg_group` VALUES (1, '-1001537257987', 'CODE_TG_BOT程序', 1635152143, 1635152143, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -374,6 +374,7 @@ INSERT INTO `cd_system_menu` VALUES (254, 0, '码库管理', 'fa fa-list', '', '
 INSERT INTO `cd_system_menu` VALUES (255, 254, '码库类型', 'fa fa-list', 'code.code_type/index', '', '_self', 0, 1, '', 1635992796, 1635992796, NULL);
 INSERT INTO `cd_system_menu` VALUES (256, 254, '命令管理', 'fa fa-list', 'code.tg_command/index', '', '_self', 0, 1, '', 1635994472, 1635994472, NULL);
 INSERT INTO `cd_system_menu` VALUES (257, 254, '授权群组', 'fa fa-list', 'code.tg_group/index', '', '_self', 0, 1, '', 1636013712, 1636013712, NULL);
+INSERT INTO `cd_system_menu` VALUES (258, 254, 'TG用户', 'fa fa-list', 'code.tg_user/index', '', '_self', 0, 1, '', 1636079486, 1636079486, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -578,6 +579,7 @@ CREATE TABLE `cd_tg_user` (
 -- Records of cd_tg_user
 -- ----------------------------
 BEGIN;
+
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
