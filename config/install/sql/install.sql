@@ -37,10 +37,8 @@ CREATE TABLE `jd_auth_tg_group`
 -- ----------------------------
 -- Records of jd_auth_tg_group
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_auth_tg_group`
 VALUES (1, '' - 670733478 '', ''CODE_TG_BOT程序'', 1635152143, 1635152143, NULL);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_code_type
@@ -62,10 +60,8 @@ CREATE TABLE `jd_code_type`
 -- ----------------------------
 -- Records of jd_code_type
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_code_type`
 VALUES (1, 3, ''Ym'', 7, 5, 5, NULL, NULL);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_system_admin
@@ -94,11 +90,9 @@ CREATE TABLE `jd_system_admin`
 -- ----------------------------
 -- Records of jd_system_admin
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_system_admin`
 VALUES (1, NULL, '' / static / admin / images / head.jpg '', ''yuanzhu'', ''ed696eb5bba1f7460585cc6975e6cf9bf24903dd'',
         NULL, '''', 3, 0, 1, 1635152143, 1636075005, NULL);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_system_auth
@@ -121,12 +115,10 @@ CREATE TABLE `jd_system_auth`
 -- ----------------------------
 -- Records of jd_system_auth
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_system_auth`
 VALUES (1, ''管理员'', 1, 1, ''系统管理员'', 1588921753, 1636075068, NULL);
 INSERT INTO `jd_system_auth`
-VALUES (6, ''游客权限'', 0, 1, '''', 1588227513, 1589591751, 1589591751);
-COMMIT;
+VALUES (6, ''游客权限'', 0, 1, '''', 1588227513, 1589591751, NULL);
 
 -- ----------------------------
 -- Table structure for jd_system_auth_node
@@ -145,7 +137,6 @@ CREATE TABLE `jd_system_auth_node`
 -- ----------------------------
 -- Records of jd_system_auth_node
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_system_auth_node`
 VALUES (1, 6, 1);
 INSERT INTO `jd_system_auth_node`
@@ -376,7 +367,6 @@ INSERT INTO `jd_system_auth_node`
 VALUES (114, 1, 97);
 INSERT INTO `jd_system_auth_node`
 VALUES (115, 1, 98);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_system_command
@@ -397,7 +387,6 @@ CREATE TABLE `jd_system_command`
 -- ----------------------------
 -- Records of jd_system_command
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_system_command`
 VALUES (1, ''test'', ''这是一条测试命令'', NULL, ''app\\api\\controller\\Command'', ''test'', NULL);
 INSERT INTO `jd_system_command`
@@ -454,7 +443,6 @@ n'', ''app
 \\Command'', ''message'', NULL);
 INSERT INTO `jd_system_command`
 VALUES (3, ''pet'', ''提交东东萌宠'', NULL, ''app\\api\\controller\\Command'', ''code'', NULL);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_system_config
@@ -478,7 +466,6 @@ CREATE TABLE `jd_system_config`
 -- ----------------------------
 -- Records of jd_system_config
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_system_config`
 VALUES (41, ''alisms_access_key_id'', ''sms'', ''填你的'', ''阿里大于公钥'', 0, NULL, NULL);
 INSERT INTO `jd_system_config`
@@ -549,7 +536,6 @@ INSERT INTO `jd_system_config`
 VALUES (88, ''tg_name'', ''tg_bot'', ''填你的'', ''机器人名称'', 0, NULL, NULL);
 INSERT INTO `jd_system_config`
 VALUES (89, ''tg_token'', ''tg_bot'', ''填你的'', ''机器人TOKEN'', 0, NULL, NULL);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_system_menu
@@ -578,7 +564,6 @@ CREATE TABLE `jd_system_menu`
 -- ----------------------------
 -- Records of jd_system_menu
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_system_menu`
 VALUES (227, 99999999, ''后台首页'', ''fa fa-home'', ''index/welcome'', '''', ''_self'', 0, 1, NULL, NULL, 1573120497,
         NULL);
@@ -619,7 +604,6 @@ VALUES (256, 254, ''命令管理'', ''fa fa-list'', ''code.tg_command/index'', '
 INSERT INTO `jd_system_menu`
 VALUES (257, 254, ''授权群组'', ''fa fa-list'', ''code.tg_group/index'', '''', ''_self'', 0, 1, '''', 1636013712,
         1636013712, NULL);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_system_node
@@ -641,7 +625,6 @@ CREATE TABLE `jd_system_node`
 -- ----------------------------
 -- Records of jd_system_node
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_system_node`
 VALUES (1, ''system.admin'', ''管理员管理'', 1, 1, 1589580432, 1589580432);
 INSERT INTO `jd_system_node`
@@ -840,7 +823,6 @@ INSERT INTO `jd_system_node`
 VALUES (98, ''code.tg_user/modify'', ''属性修改'', 2, 1, 1636014757, 1636014757);
 INSERT INTO `jd_system_node`
 VALUES (99, ''system.config/setWebhook'', ''设置Webhook'', 2, 1, 1636075022, 1636075022);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_system_quick
@@ -864,7 +846,6 @@ CREATE TABLE `jd_system_quick`
 -- ----------------------------
 -- Records of jd_system_quick
 -- ----------------------------
-BEGIN;
 INSERT INTO `jd_system_quick`
 VALUES (1, ''管理员管理'', ''fa fa-user'', ''system.admin/index'', 0, 1, '''', 1589624097, 1589624792, NULL);
 INSERT INTO `jd_system_quick`
@@ -877,7 +858,6 @@ INSERT INTO `jd_system_quick`
 VALUES (7, ''配置管理'', ''fa fa-asterisk'', ''system.config/index'', 0, 1, NULL, 1589624097, 1589624792, NULL);
 INSERT INTO `jd_system_quick`
 VALUES (8, ''上传管理'', ''fa fa-arrow-up'', ''system.uploadfile/index'', 0, 1, NULL, 1589624772, 1589624781, NULL);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_system_uploadfile
@@ -908,8 +888,6 @@ CREATE TABLE `jd_system_uploadfile`
 -- ----------------------------
 -- Records of jd_system_uploadfile
 -- ----------------------------
-BEGIN;
-COMMIT;
 
 -- ----------------------------
 -- Table structure for jd_tg_user
@@ -931,5 +909,3 @@ CREATE TABLE `jd_tg_user`
 -- ----------------------------
 -- Records of jd_tg_user
 -- ----------------------------
-BEGIN;
-COMMIT;
