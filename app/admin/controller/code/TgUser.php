@@ -65,7 +65,7 @@ class TgUser extends AdminController
      * @return bool|string
      */
     private function sendMessages($chat_id,$text,$message_id=null){
-        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/sendmessage';
+        $url = 'https://api.telegram.org/bot' . $this->getTgToken() . '/sendmessage';
         $data = [
             'chat_id' => $chat_id,
             'text'=>htmlspecialchars_decode($text),
