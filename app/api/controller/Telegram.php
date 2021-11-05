@@ -40,16 +40,6 @@ class Telegram extends ApiController
         $this->tgUser = $tgUser;
     }
 
-    public function setWebhook(){
-        $callback='https://api.jdber.xyz/api/receiveMessages.json';
-        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/setWebhook';
-        $data = [
-            'url' => $callback. '?token=' . md5($this->getToken()),
-        ];
-        $result = curl_post($url, $data);
-        dump($result);
-    }
-
     public function receiveMessages(){
         $input = file_get_contents('php://input');
         $input = json_decode($input, true);

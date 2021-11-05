@@ -7,7 +7,7 @@ use think\facade\Route;
 Route::group('/', function () {
     Route::rule('get_share_code/:type', 'ShareCode/getList');
 
-    Route::rule('setWebhook','Telegram/setWebhook');
+
     Route::rule('receiveMessages','Telegram/receiveMessages');
 
 })->ext('json');

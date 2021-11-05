@@ -65,4 +65,17 @@ class Config extends AdminController
         $this->success('保存成功');
     }
 
+    /**
+     * @NodeAnotation(title="设置Webhook")
+     */
+    public function setWebhook(){
+        $callback=$this->request->domain().'/api/receiveMessages.json';
+        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/setWebhook';
+        $data = [
+            'url' => $callback. '?token=' . md5($this->getToken()),
+        ];
+        $result = curl_post($url, $data);
+        $this->success($result);
+    }
+
 }
