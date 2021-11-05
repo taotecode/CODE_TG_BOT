@@ -45,8 +45,7 @@ class TgUser extends AdminController
             $post = $this->request->post();
             $rule = [];
             $this->validate($post, $rule);
-            $result=$this->sendMessages($row->chat_id,$post['text']);
-            dd($result);
+            $result=$this->sendMessages($row->tg_id,$post['text']);
             if ($result['error_code']??0===400){
                 $this->error('发送失败');
             }
