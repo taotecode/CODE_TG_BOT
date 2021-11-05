@@ -1,4 +1,6 @@
-define(["jquery", "easy-admin"], function ($, ea) {
+define(["jquery", "easy-admin","laymd"], function ($, ea) {
+
+    var laymd = layui.laymd;
 
     var init = {
         table_elem: '#currentTable',
@@ -47,7 +49,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
         send_msg: function () {
-            ea.listen();
+            //实例化编辑器,可以多个实例
+            var md = laymd.init('text', {});
+            //初始化数据预览
+            md.do('change');
+            ea.listen(function (data) {
+                data.text = md.getText();
+                return data;
+            });
         },
     };
     return Controller;

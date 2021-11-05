@@ -101,7 +101,7 @@ class Telegram extends ApiController
             }
             $call=invoke([$commandData->call_controller,$commandData->call_action],[$command[1]??'',$input,$commandData]);
             if ($call['html']??false===true){
-                return $this->sendMessagesHtml($chatId,$call,$messageId);
+                return $this->sendMessagesMarkDown($chatId,$call,$messageId);
             }
             return $this->sendMessages($chatId,$call,$messageId);
         }
@@ -141,6 +141,24 @@ class Telegram extends ApiController
             'text'=>$text,
             'reply_to_message_id'=>$message_id,
             'parse_mode'=>'HTML',
+        ];
+        return curl_post($url, $data);
+    }
+
+    /**
+     * 发送信息
+     * @param $chat_id
+     * @param $text
+     * @param null $message_id
+     * @return bool|string
+     */
+    private function sendMessagesMarkDown($chat_id,$text,$message_id=null){
+        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/sendmessage';
+        $data = [
+            'chat_id' => $chat_id,
+            'text'=>$text,
+            'reply_to_message_id'=>$message_id,
+            'parse_mode'=>'markdown',
         ];
         return curl_post($url, $data);
     }

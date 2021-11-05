@@ -69,7 +69,7 @@ class TgGroup extends AdminController
             'chat_id' => $chat_id,
             'text'=>$text,
             'reply_to_message_id'=>$message_id,
-            'parse_mode'=>'HTML',
+            'parse_mode'=>'markdown',
         ];
         return curl_post($url, $data);
     }

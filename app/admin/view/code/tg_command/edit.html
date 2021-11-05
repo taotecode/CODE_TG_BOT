@@ -18,9 +18,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label">自动回复内容</label>
             <div class="layui-input-block">
-                <textarea name="text" rows="20" class="layui-textarea editor" placeholder="请输入自动回复内容"></textarea>
+                <div id="text"></div>
                 <tip>
-                    该项可为空，如果需要自动回复内容，是支持HTML格式（编辑器已自带HTML）<br>
+                    该项可为空，如果需要自动回复内容，是支持markdown格式（编辑器已自带MarkDown）<br>
                     如果需要自动回复内容，请在命令指向控制器内填写<b>app\api\controller\Command</b><br>
                     如果需要自动回复内容，请在命令指向方法内填写<b>message</b><br>
                 </tip>

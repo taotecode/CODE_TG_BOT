@@ -1,10 +1,10 @@
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
 
-        <div class="layui-form-item">
+        <div class="layui-form-item" pane="">
             <label class="layui-form-label">消息内容</label>
             <div class="layui-input-block">
-                <textarea name="text" rows="20" class="layui-textarea editor" placeholder="请输入消息内容"></textarea>
+                <div id="text"></div>
             </div>
         </div>
 
@@ -16,3 +16,4 @@
 
     </form>
 </div>
+<script src="__STATIC__/plugs/laymd/marked.min.js"></script>

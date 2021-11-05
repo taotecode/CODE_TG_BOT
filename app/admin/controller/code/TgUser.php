@@ -46,6 +46,7 @@ class TgUser extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             $result=$this->sendMessages($row->chat_id,$post['text']);
+            dump($result);
             if ($result['error_code']??0===400){
                 $this->error('发送失败');
             }
@@ -68,7 +69,7 @@ class TgUser extends AdminController
             'chat_id' => $chat_id,
             'text'=>$text,
             'reply_to_message_id'=>$message_id,
-            'parse_mode'=>'HTML',
+            'parse_mode'=>'markdown',
         ];
         return curl_post($url, $data);
     }
