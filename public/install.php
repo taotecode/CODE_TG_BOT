@@ -190,7 +190,7 @@ function checkDatabase($database)
 function createDatabase($database)
 {
     try {
-        Db::execute("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET utf8mb4");
+        Db::execute("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci");
     } catch (\Exception $e) {
         return false;
     }
