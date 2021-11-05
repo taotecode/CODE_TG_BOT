@@ -77,12 +77,11 @@ class Command extends ApiController
             return '请输入您的助力码';
         }
         //获取码类型
-        $codeType=$this->codeType->where('command_id',$commandData['id'])->with('SystemCommand')->find();
-        Log::info(json_encode($codeType));
+        $codeType=$this->codeType->where('command_id',$commandData['id'])->find();
         //设置存储时间
         $this->codeTableService->tableSuffix=date($codeType['storage_time'], time());
         //设置表名
-        $this->codeTableService->tableName =$this->codeTableService->tableName.'_'.$codeType->SystemCommand->command;
+        $this->codeTableService->tableName =$this->codeTableService->tableName.'_'.$commandData['command'];
 
         $chatId=$input['groupId'];
         $codes=explode("&",$messageData);
