@@ -94,6 +94,12 @@ class Telegram extends ApiController
             $this->sendMessages($chatId,'欢迎：'.$messageUser['username'],$messageId);
         }
 
+        /*if (!empty($input['entities'])){
+            if ($input['entities']['type'] === "mention"){
+
+            }
+        }*/
+
         //判断用户是否加入
         if (!$this->tgUser->where('tg_id',$messageUser['id'])->find()){
             $this->tgUser->save([
@@ -121,6 +127,7 @@ class Telegram extends ApiController
         }
 
         //return $this->sendMessages($chatId,$messageData,$messageId);
+        //将其它消息记录下来
         return 'success';
     }
 

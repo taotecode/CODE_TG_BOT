@@ -12,7 +12,8 @@
 
 namespace app\admin\controller\system;
 
-
+use Longman\TelegramBot\Exception\TelegramException;
+use Longman\TelegramBot\Telegram;
 use app\admin\model\SystemConfig;
 use app\admin\service\TriggerService;
 use app\common\controller\AdminController;
@@ -69,13 +70,19 @@ class Config extends AdminController
      * @NodeAnotation(title="设置Webhook")
      */
     public function setWebhook(){
+        if (empty($this->getTgToken())){
+            $this->error('请先保存机器人用户名和TOKEN配置');
+        }
         $callback=$this->request->domain().'/api/receiveMessages.json';
-        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/setWebhook';
-        $data = [
-            'url' => $callback. '?token=' . md5($this->getToken()),
-        ];
-        $result = curl_post($url, $data);
-        $this->success($result);
+        try {
+            $telegram = new Telegram($this->getTgToken(), $this->getTgUserName());
+            $result = $telegram->setWebhook($callback);
+            if ($result->isOk()) {
+                $this->success($result->getDescription());
+            }
+        } catch (TelegramException $e) {
+            $this->error($e->getMessage());
+        }
     }
 
 }
