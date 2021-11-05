@@ -16,6 +16,13 @@
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">自动回复内容</label>
+            <div class="layui-input-block">
+                <textarea name="text" rows="20" class="layui-textarea editor" placeholder="请输入自动回复内容"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label">命令指向控制器</label>
             <div class="layui-input-block">
                 <input type="text" name="call_controller" class="layui-input" lay-verify="required" placeholder="请输入命令指向控制器" value="{$row.call_controller|default=''}">

@@ -100,6 +100,9 @@ class Telegram extends ApiController
                 return $this->sendMessages($chatId,'不是正确的命令，请输入 /help 查看命令',$messageId);
             }
             $call=invoke([$commandData->call_controller,$commandData->call_action],[$command[1]??'',$input,$commandData]);
+            if ($call['html']??false===true){
+                return $this->sendMessagesHtml($chatId,$call,$messageId);
+            }
             return $this->sendMessages($chatId,$call,$messageId);
         }
 
@@ -120,6 +123,24 @@ class Telegram extends ApiController
             'chat_id' => $chat_id,
             'text'=>$text,
             'reply_to_message_id'=>$message_id,
+        ];
+        return curl_post($url, $data);
+    }
+
+    /**
+     * 发送信息
+     * @param $chat_id
+     * @param $text
+     * @param null $message_id
+     * @return bool|string
+     */
+    private function sendMessagesHtml($chat_id,$text,$message_id=null){
+        $url = 'https://api.telegram.org/bot' . $this->getToken() . '/sendmessage';
+        $data = [
+            'chat_id' => $chat_id,
+            'text'=>$text,
+            'reply_to_message_id'=>$message_id,
+            'parse_mode'=>'HTML',
         ];
         return curl_post($url, $data);
     }
