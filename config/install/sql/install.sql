@@ -590,5 +590,25 @@ CREATE TABLE `cd_tg_user` (
 BEGIN;
 
 COMMIT;
+-- ----------------------------
+-- Table structure for cd_tg_chat
+-- ----------------------------
+CREATE TABLE `cd_tg_chat` (
+                              `id` bigint NOT NULL AUTO_INCREMENT,
+                              `chat_id` varchar(200) DEFAULT NULL COMMENT '聊天方式ID',
+                              `chat_username` varchar(1000) DEFAULT NULL COMMENT '聊天用户名',
+                              `chat_type` varchar(255) DEFAULT NULL COMMENT '聊天方式',
+                              `from_id` varchar(200) DEFAULT NULL COMMENT '发送者ID',
+                              `from_username` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '发送者用户名',
+                              `text` text COMMENT '发送内容',
+                              `original_data` text COMMENT '原始信息',
+                              `create_time` int DEFAULT NULL COMMENT '创建时间',
+                              PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='tg聊天列表';
+-- ----------------------------
+-- Records of cd_tg_user
+-- ----------------------------
+BEGIN;
 
+COMMIT;
 SET FOREIGN_KEY_CHECKS = 1;

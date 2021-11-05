@@ -25,6 +25,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'chat_id', minWidth: 80, title: '聊天方式ID'},
                     {field: 'chat_username', minWidth: 80, title: '聊天用户名'},
                     {field: 'from_username', minWidth: 80, title: '发送者用户名'},
+                    {field: 'chat_type', minWidth: 80, title: '聊天方式', search: 'select', selectList: {'private': '向机器人私聊', 'group': '群组','supergroup':'超级群组'}},
                     {field: 'text', minWidth: 80, title: '消息内容'},
                     {field: 'create_time', minWidth: 80, title: '创建时间', search: 'range'},
                     {width: 250, title: '操作', templet: ea.table.tool}
