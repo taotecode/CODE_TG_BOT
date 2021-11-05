@@ -27,6 +27,7 @@ define(["jquery", "easy-admin","laymd"], function ($, ea) {
                         auth: 'send_msg',
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                         icon: 'fa fa-envelope',
+                        checkbox:true,
                     }],
                     'add','delete', 'export'],
                 cols: [[
