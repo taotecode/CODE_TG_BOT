@@ -140,7 +140,7 @@ class Telegram extends ApiController
             'chat_username'=>$input['message']['chat']['username'],
             'chat_type'=>$chatType,
             'from_id'=>$messageUser['id'],
-            'form_username'=>$messageUser['username'],
+            'from_username'=>$messageUser['username'],
             'text'=>$messageData,
             'original_data'=>json_encode($input),
         ]);
