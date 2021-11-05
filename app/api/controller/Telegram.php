@@ -120,7 +120,8 @@ class Telegram extends ApiController
             return $this->sendMessages($chatId,$call,$messageId);
         }
 
-        return $this->sendMessages($chatId,$messageData,$messageId);
+        //return $this->sendMessages($chatId,$messageData,$messageId);
+        return 'success';
     }
 
 
