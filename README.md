@@ -20,6 +20,8 @@
 
 ## 代码仓库
 
+代码已开源，欢迎大家一起协作开发新功能并优化
+
 * GitHub地址：[https://github.com/yuanzhumc/CODE_TG_BOT](https://github.com/yuanzhumc/CODE_TG_BOT)
 
 * Gitee地址：[https://gitee.com/yuanzhumc/CODE_TG_BOT](https://gitee.com/yuanzhumc/CODE_TG_BOT)
