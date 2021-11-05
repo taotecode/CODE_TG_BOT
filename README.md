@@ -32,3 +32,4 @@ mysql>=8
 crontab
 redis
 Supervisor
+composer
