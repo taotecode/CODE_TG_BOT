@@ -91,7 +91,7 @@ class Telegram extends ApiController
                     'language_code'=>$messageUser['language_code'],
                 ]);
             }
-            $this->sendMessages($chatId,'您发送的消息通道有误。',$messageId);
+            $this->sendMessages($chatId,'欢迎：'.$messageUser['username'],$messageId);
         }
 
         //判断用户是否加入
