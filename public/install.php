@@ -433,7 +433,7 @@ EOT;
             <div class="layui-form-item">
                 <label class="layui-form-label">数据库地址</label>
                 <div class="layui-input-block">
-                    <input class="layui-input" name="hostname" autocomplete="off" lay-verify="required" lay-reqtext="请输入数据库地址" placeholder="请输入数据库地址" value="127.0.0.1">
+                    <input class="layui-input" name="hostname" autocomplete="off" lay-verify="required" lay-reqtext="请输入数据库地址" placeholder="请输入数据库地址" value="localhost">
                 </div>
             </div>
 
