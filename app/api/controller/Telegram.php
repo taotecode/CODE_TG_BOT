@@ -168,7 +168,7 @@ class Telegram extends ApiController
             ];
             $result = Request::sendMessage($data);
             if ($result->isOk()) {
-                return true;
+                return 'ok';
             }
             return false;
         } catch (TelegramException $e) {
@@ -194,7 +194,7 @@ class Telegram extends ApiController
             ];
             $result = Request::sendMessage($data);
             if ($result->isOk()) {
-                return true;
+                return 'ok';
             }
             return false;
         } catch (TelegramException $e) {
@@ -220,7 +220,7 @@ class Telegram extends ApiController
             ];
             $result = Request::sendMessage($data);
             if ($result->isOk()) {
-                return true;
+                return 'ok';
             }
             return false;
         } catch (TelegramException $e) {
