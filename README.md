@@ -114,3 +114,7 @@ php think code_num
 ### 添加基础助力码
 
 给机器人发送相关码命令，会自动创建码库
+
+## 历史 Star 数
+
+[![Stargazers over time](https://starchart.cc/yuanzhumc/CODE_TG_BOT.svg)](https://starchart.cc/yuanzhumc/CODE_TG_BOT)
