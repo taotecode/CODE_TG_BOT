@@ -4,7 +4,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">关联命令</label>
             <div class="layui-input-block">
-                <select name="command_id" lay-verify="required" data-select="{:url('code.tg_command/index')}" data-fields="id,command">
+                <select name="command_id" lay-verify="required" data-select="{:url('code.tg_command/index')}" data-fields="id,command" data-value="{$row.command_id|default=''}">
                 </select>
             </div>
         </div>

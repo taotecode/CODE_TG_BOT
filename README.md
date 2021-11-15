@@ -5,6 +5,13 @@
 [![Thinkphp Version](https://img.shields.io/badge/thinkphp-%3E=6.0.2-brightgreen.svg?maxAge=2592000)](https://github.com/top-think/framework)
 [![Layui Version](https://img.shields.io/badge/layui-=2.5.5-brightgreen.svg?maxAge=2592000&color=critical)](https://github.com/sentsin/layui)
 [![Layui Version](https://img.shields.io/badge/easyadmin-=2.1.6-brightgreen.svg?maxAge=2592000&color=critical)](https://github.com/zhongshaofa/easyadmin)
+
+* TG电报交流群 [https://t.me/CODE_TG_BOT](https://t.me/CODE_TG_BOT)
+* TG电报频道 [https://t.me/CODE_TG_BOT_NEW](https://t.me/CODE_TG_BOT_NEW)
+
+
+### 已搭建的TG_BOT [https://t.me/JD_ShareCode_yuanzhu_bot](https://t.me/JD_ShareCode_yuanzhu_bot)
+
 ### 支持功能：
 * 防白嫖
     * 通过tg机器人一键验证
@@ -107,3 +114,7 @@ php think code_num
 ### 添加基础助力码
 
 给机器人发送相关码命令，会自动创建码库
+
+## 历史 Star 数
+
+[![Stargazers over time](https://starchart.cc/yuanzhumc/CODE_TG_BOT.svg)](https://starchart.cc/yuanzhumc/CODE_TG_BOT)
