@@ -57,9 +57,9 @@ class ShareCode extends ApiController
             return show(5000,'该助力方式不支持！');
         }
         $codeType=$systemCommand->CodeType;
-        $tableName=Config::get('database.connections.mysql.prefix').'code_'.date($codeType->storage_time, time()).'_'.$type;
+        $tableName='code_'.date($codeType->storage_time, time()).'_'.$type;
         //先检查是否存在该表
-        $check = Db::query("show tables like '{$tableName}'");
+        $check = Db::query("show tables like '".Config::get('database.connections.mysql.prefix').$tableName."'");
         if (empty($check)) {
             return show(4000,'码库无码，请到tg进行添加！');
         }
