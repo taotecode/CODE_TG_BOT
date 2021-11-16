@@ -19,10 +19,12 @@ use app\admin\model\CodeType;
 use app\admin\model\SystemCommand;
 use app\api\service\CodeTableService;
 use app\common\controller\ApiController;
+use Redis;
 use think\App;
 use think\facade\Cache;
 use think\facade\Config;
 use think\facade\Db;
+use think\facade\Env;
 use think\facade\Queue;
 
 class ShareCode extends ApiController
@@ -71,6 +73,23 @@ class ShareCode extends ApiController
             ->order('pull_num','desc')
             ->order('num','asc')
             ->find();
+
+        //判断是mysql还是redis
+        if ($codeType->storage_type!='1'){
+            return $this->mysqlType($tableName,$userInfo,$codeType,$limit);
+        }
+        return $this->redisType();
+    }
+
+    /**
+     * mysql取出码
+     * @param $tableName
+     * @param $userInfo
+     * @param $codeType
+     * @param $limit
+     * @return \think\response\Redirect
+     */
+    protected function mysqlType($tableName,$userInfo,$codeType,$limit){
         //没有添加助力码则随机取
         if (!$userInfo){
             $list=$this->model
@@ -97,7 +116,7 @@ class ShareCode extends ApiController
                     ->select();
             }
             $job_data=[
-                'tableName'=>$tableName,'list'=>$list
+                'tableName'=>$tableName,'list'=>$list,'codeType'=>$codeType,
             ];
             $lists=[];
             foreach ($list as $item){
@@ -134,7 +153,7 @@ class ShareCode extends ApiController
         }
         //组合数据提交给队列任务
         $job_data=[
-            'userInfo'=>$userInfo,'tableName'=>$tableName,'list'=>$list
+            'userInfo'=>$userInfo,'tableName'=>$tableName,'list'=>$list,'codeType'=>$codeType,
         ];
         $lists=[];
         foreach ($list as $item){
@@ -142,6 +161,29 @@ class ShareCode extends ApiController
         }
         //组合数据提交给队列任务
         return $this->actionWithCodeJob($job_data,$lists);
+    }
+
+    protected function redisType($tableName,$userInfo,$codeType,$limit=10){
+        //实例化redis
+        $redis = new Redis();
+        //连接
+        $redis->connect(Env::get('cache.redis_host', '127.0.0.1'), 6379);
+        if (!$userInfo){
+            $sortednName='api:code:sorted:'.$tableName;
+            $hashName='api:code:hash:'.$tableName;
+            $list=$redis->zrange($sortednName,0,$limit);
+            $lists=[];
+            foreach ($list as $item){
+                $lists[]=$redis->hGet($hashName,$item);
+            }
+            //组合数据提交给队列任务
+            $job_data=[
+                'userInfo'=>$userInfo,'tableName'=>$tableName,'list'=>$lists,'codeType'=>$codeType,
+            ];
+            //组合数据提交给队列任务
+            return $this->actionWithCodeJob($job_data,$lists);
+        }
+        $redis->zrange('set_zadd',0,$limit);
     }
 
     /**

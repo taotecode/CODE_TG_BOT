@@ -47,6 +47,7 @@ CREATE TABLE `cd_code_type` (
                                 `id` bigint NOT NULL AUTO_INCREMENT,
                                 `command_id` bigint DEFAULT NULL COMMENT '命令ID',
                                 `storage_time` varchar(20) NOT NULL DEFAULT 'Ym' COMMENT '存储时间',
+                                `storage_type` tinyint NOT NULL DEFAULT '0' COMMENT '存储方式0mysql1mysql+redis',
                                 `code_time` bigint NOT NULL DEFAULT '7' COMMENT 'code存储时间单位day',
                                 `number` bigint NOT NULL DEFAULT '5' COMMENT '每天投放次数',
                                 `pull_number` bigint DEFAULT '0' COMMENT '用户拉取次数',

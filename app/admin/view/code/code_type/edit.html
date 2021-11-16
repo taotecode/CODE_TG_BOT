@@ -18,6 +18,14 @@
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">存储方式</label>
+            <div class="layui-input-block">
+                <input type="radio" name="storage_type" value="0" title="mysql" {if $row.storage_type=="0"}checked{/if}>
+                <input type="radio" name="storage_type" value="1" title="mysql+redis(推荐)" {if $row.storage_type=="1"}checked{/if}>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label">code存储时间</label>
             <div class="layui-input-block">
                 <input type="number" name="code_time" class="layui-input" lay-verify="required" placeholder="请输入code存储时间" value="{$row.code_time|default='7'}">

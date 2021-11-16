@@ -31,7 +31,8 @@
         "ext-json": "*",
         "zhongshaofa/thinkphp-log-trace": "^1.0",
         "topthink/think-queue": "^3.0",
-        "longman/telegram-bot": "^0.74.0"
+        "longman/telegram-bot": "^0.74.0",
+        "ext-redis": "*"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
