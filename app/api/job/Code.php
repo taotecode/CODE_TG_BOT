@@ -32,7 +32,7 @@ class Code
      */
     public function fire(Job $job, $data): void
     {
-
+        print("<info>新的工作开始</info> \n");
         $isJobDone = $this->run_job($data);
         if ($isJobDone) {
             $job->delete();
@@ -51,18 +51,19 @@ class Code
      */
     private function run_job($data)
     {
-        print("<info>新的工作开始</info> \n");
+        $tablePrefix=Config::get('database.connections.mysql.prefix');
+        $tableName=$tablePrefix.$data['tableName'];
         if (!empty($data['userInfo']??'')){
             //增加pull_num
-            Db::table(Config::get('database.connections.mysql.prefix').$data['tableName'])->where('id', $data['userInfo']['id'])->inc('pull_num')->update();
+            Db::table($tableName)->where('id', $data['userInfo']['id'])->inc('pull_num')->update();
         }
         if (!empty($data['list'])){
             //增加被助力的num
             foreach ($data['list'] as $item){
                 if (empty($item['id']??'')){
-                    Db::table(Config::get('database.connections.mysql.prefix').$data['tableName'])->where('code', $item)->inc('num')->update();
+                    Db::table($tableName)->where('code', $item)->inc('num')->update();
                 }else{
-                    Db::table(Config::get('database.connections.mysql.prefix').$data['tableName'])->where('id', $item['id'])->inc('num')->update();
+                    Db::table($tableName)->where('id', $item['id'])->inc('num')->update();
                 }
             }
         }
@@ -77,9 +78,12 @@ class Code
         $redis = new Redis();
         //连接
         $redis->connect(Env::get('cache.redis_host', '127.0.0.1'), 6379);
+        //模型
         $model =new \app\api\model\Code();
         $model->setTableName($data['tableName']);
+        //取出数据
         if (empty($data['userInfo']??'')){
+            //第一次取
             $list= $model
                 ->where(['status'=>0])
                 ->where('pull_num','>=',$data['codeType']['pull_number'])
@@ -90,6 +94,7 @@ class Code
                 ->order('num','asc')
                 ->order('id','desc')
                 ->select();
+            //如果为空取第二次，减少pull_num（用户拉取次数）条件
             if ($list->isEmpty()){
                 $list= $model
                     ->where(['status'=>0])
@@ -102,8 +107,8 @@ class Code
                     ->select();
             }
             //删除之前的数据
-            $redis->del('api:code:sorted:'.$data['tableName']);
-            $redis->del('api:code:hash:'.$data['tableName']);
+            $redis->del('api:code:sorted:'.$data['tableName']);//索引库
+            $redis->del('api:code:hash:'.$data['tableName']);//码库
             foreach ($list as $k=>$item){
                 //加入集合
                 $redis->zadd('api:code:sorted:'.$data['tableName'], $k,(string)$item->id);
@@ -112,6 +117,7 @@ class Code
             }
             return true;
         }
+        //第一次取
         $list=$model
             ->whereNotIn('tg_id',[$data['userInfo']['tg_id']])
             ->where(['status'=>0])
@@ -123,6 +129,7 @@ class Code
             ->order('num','asc')
             ->order('id','desc')
             ->select();
+        //如果为空取第二次，减少pull_num（用户拉取次数）条件
         if ($list->isEmpty()){
             $list=$model
                 ->whereNotIn('tg_id',[$data['userInfo']['tg_id']])
@@ -135,9 +142,10 @@ class Code
                 ->order('id','desc')
                 ->select();
         }
+        //加入用户专属码库，这样每个用户之间不会冲突
         //删除之前的数据
-        $redis->del('api:code:sorted:'.$data['tableName'].'_'.$data['userInfo']['id']);
-        $redis->del('api:code:hash:'.$data['tableName'].'_'.$data['userInfo']['id']);
+        $redis->del('api:code:sorted:'.$data['tableName'].'_'.$data['userInfo']['id']);//索引库
+        $redis->del('api:code:hash:'.$data['tableName'].'_'.$data['userInfo']['id']);//码库
         foreach ($list as $k=>$item){
             //加入集合
             $redis->zadd('api:code:sorted:'.$data['tableName'].'_'.$data['userInfo']['id'], $k,(string)$item->id);

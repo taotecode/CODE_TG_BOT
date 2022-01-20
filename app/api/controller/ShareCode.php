@@ -18,6 +18,7 @@ use app\api\model\Code;
 use app\admin\model\CodeType;
 use app\admin\model\SystemCommand;
 use app\api\service\CodeTableService;
+use app\api\service\GetCodeService;
 use app\common\controller\ApiController;
 use Redis;
 use think\App;
@@ -31,15 +32,18 @@ class ShareCode extends ApiController
 {
     protected $codeType;
     protected $systemCommand;
+    protected $getCodeService;
 
     public function __construct(
         App $app,
         CodeType $codeType,
-        SystemCommand $systemCommand
+        SystemCommand $systemCommand,
+        GetCodeService $getCodeService
     ){
         parent::__construct($app);
         $this->codeType=$codeType;
         $this->systemCommand=$systemCommand;
+        $this->getCodeService=$getCodeService;
     }
 
     public function getList($type=null){
@@ -49,17 +53,18 @@ class ShareCode extends ApiController
             return show(5000,'请提供您的助力码后再进行获取');
         }
         //启用数据库查询缓存
-        if (Cache::has('api:ShareCode:getList:systemCommand_'.$type)){
-            $systemCommand=Cache::get('api:ShareCode:getList:systemCommand_'.$type);
+        $systemCommandCacheName='api:ShareCode:getList:systemCommand_'.$type;
+        if (Cache::has($systemCommandCacheName)){
+            $systemCommand=Cache::get($systemCommandCacheName);
         }else{
             $systemCommand=$this->systemCommand->where('command',$type)->find();
-            Cache::set('api:ShareCode:getList:systemCommand_'.$type,$systemCommand,'259200');
+            Cache::set($systemCommandCacheName,$systemCommand,'259200');
         }
         if (!$systemCommand){
             return show(5000,'该助力方式不支持！');
         }
         $codeType=$systemCommand->CodeType;
-        $tableName='code_'.date($codeType->storage_time, time()).'_'.$type;
+        $tableName='code_'.date($codeType->storage_time).'_'.$type;
         //先检查是否存在该表
         $check = Db::query("show tables like '".Config::get('database.connections.mysql.prefix').$tableName."'");
         if (empty($check)) {
@@ -76,136 +81,16 @@ class ShareCode extends ApiController
 
         //判断是mysql还是redis
         if ($codeType->storage_type!='1'){
-            return $this->mysqlType($tableName,$userInfo,$codeType,$limit);
-        }
-        return $this->redisType();
-    }
-
-    /**
-     * mysql取出码
-     * @param $tableName
-     * @param $userInfo
-     * @param $codeType
-     * @param $limit
-     * @return \think\response\Redirect
-     */
-    protected function mysqlType($tableName,$userInfo,$codeType,$limit){
-        //没有添加助力码则随机取
-        if (!$userInfo){
-            $list=$this->model
-                ->where(['status'=>0])
-                ->where('pull_num','>=',$codeType->pull_number)
-                ->where('num','<=',$codeType->number)
-                ->orderRaw('rand()')
-                ->limit($limit)
-                ->order('pull_num','desc')
-                ->order('num','asc')
-                ->order('id','desc')
-                ->field('code')
-                ->select();
-            if ($list->isEmpty()){
-                $list=$this->model
-                    ->where(['status'=>0])
-                    ->where('num','<=',$codeType->number)
-                    ->orderRaw('rand()')
-                    ->limit($limit)
-                    ->order('pull_num','desc')
-                    ->order('num','asc')
-                    ->order('id','desc')
-                    ->field('code')
-                    ->select();
+            $listCode=$this->getCodeService->mysqlType($tableName,$userInfo,$codeType,$limit);
+            if ($listCode!==false){
+                return show(5000,'助力程序启动失败');
             }
-            $job_data=[
-                'tableName'=>$tableName,'list'=>$list,'codeType'=>$codeType,
-            ];
-            $lists=[];
-            foreach ($list as $item){
-                $lists[]=(string)$item->code;
+        }else{
+            $listCode=$this->getCodeService->redisType($tableName,$userInfo,$codeType,$limit);
+            if ($listCode!==false){
+                return show(5000,'助力程序启动失败');
             }
-            //组合数据提交给队列任务
-            return $this->actionWithCodeJob($job_data,$lists);
         }
-        //取出
-        $list=$this->model
-            ->whereNotIn('tg_id',[$userInfo->tg_id])
-            ->where(['status'=>0])
-            ->where('pull_num','>=',$codeType->pull_number)
-            ->where('num','<=',$codeType->number)
-            ->orderRaw('rand()')
-            ->limit($limit)
-            ->order('pull_num','desc')
-            ->order('num','asc')
-            ->order('id','desc')
-            ->field('id,code')
-            ->select();
-        if ($list->isEmpty()){
-            $list=$this->model
-                ->whereNotIn('tg_id',[$userInfo->tg_id])
-                ->where(['status'=>0])
-                ->where('num','<=',$codeType->number)
-                ->orderRaw('rand()')
-                ->limit($limit)
-                ->order('pull_num','desc')
-                ->order('num','asc')
-                ->order('id','desc')
-                ->field('id,code')
-                ->select();
-        }
-        //组合数据提交给队列任务
-        $job_data=[
-            'userInfo'=>$userInfo,'tableName'=>$tableName,'list'=>$list,'codeType'=>$codeType,
-        ];
-        $lists=[];
-        foreach ($list as $item){
-            $lists[]=(string)$item->code;
-        }
-        //组合数据提交给队列任务
-        return $this->actionWithCodeJob($job_data,$lists);
-    }
-
-    protected function redisType($tableName,$userInfo,$codeType,$limit=10){
-        //实例化redis
-        $redis = new Redis();
-        //连接
-        $redis->connect(Env::get('cache.redis_host', '127.0.0.1'), 6379);
-        if (!$userInfo){
-            $sortednName='api:code:sorted:'.$tableName;
-            $hashName='api:code:hash:'.$tableName;
-            $list=$redis->zrange($sortednName,0,$limit);
-            $lists=[];
-            foreach ($list as $item){
-                $lists[]=$redis->hGet($hashName,$item);
-            }
-            //组合数据提交给队列任务
-            $job_data=[
-                'userInfo'=>$userInfo,'tableName'=>$tableName,'list'=>$lists,'codeType'=>$codeType,
-            ];
-            //组合数据提交给队列任务
-            return $this->actionWithCodeJob($job_data,$lists);
-        }
-        $redis->zrange('set_zadd',0,$limit);
-    }
-
-    /**
-     * 消息队列调用方法
-     * @param $data array 数据
-     */
-    protected function actionWithCodeJob($data,$lists){
-        //命令行挂载 php think queue:work --queue CodeJob
-
-        //   当轮到该任务时，系统将生成一个该类的实例，并调用其 fire 方法
-        $jobHandlerClassName = 'app\\api\\job\\Code';
-        // 2.当前任务归属的队列名称，如果为新队列，会自动创建
-        $jobQueueName = "CodeJob";
-        // 3.当前任务所需的业务数据 . 不能为 resource 类型，其他类型最终将转化为json形式的字符串
-        //   ( jobData 为对象时，需要在先在此处手动序列化，否则只存储其public属性的键值对)
-        $jobData = $data;
-        // 4.将该任务推送到消息队列，等待对应的消费者去执行
-        $isPushed = Queue::push( $jobHandlerClassName , $jobData , $jobQueueName);
-        //redis 驱动时，返回值为 随机字符串|false
-        if( $isPushed !== false ){
-            return show(200,'',$lists);
-        }
-        return show(5000,'助力程序启动失败');
+        return show(200,'',$listCode);
     }
 }
