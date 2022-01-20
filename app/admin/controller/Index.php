@@ -3,8 +3,10 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\AuthTgGroup;
 use app\admin\model\SystemAdmin;
 use app\admin\model\SystemQuick;
+use app\admin\model\TgUser as TgUserModel;
 use app\common\controller\AdminController;
 use think\App;
 use think\facade\Env;
@@ -31,6 +33,13 @@ class Index extends AdminController
      */
     public function welcome()
     {
+        //开始统计
+        $tgUserCount= (new \app\admin\model\TgUser)->count();
+        $this->assign('tgUserCount', $tgUserCount);
+        $tgGroupCount= (new \app\admin\model\AuthTgGroup)->count();
+        $this->assign('tgGroupCount', $tgGroupCount);
+
+
         $quicks = SystemQuick::field('id,title,icon,href')
             ->where(['status' => 1])
             ->order('sort', 'desc')

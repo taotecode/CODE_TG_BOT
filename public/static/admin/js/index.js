@@ -54,7 +54,7 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
                     success: function (layero) {
                         var btn = layero.find('.layui-layer-btn');
                         btn.find('.layui-layer-btn0').attr({
-                            href: 'https://gitee.com/zhongshaofa/layuimini',
+                            href: 'https://github.com/yuanzhumc/CODE_TG_BOT',
                             target: '_blank'
                         });
                     }

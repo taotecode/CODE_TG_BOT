@@ -18,3 +18,4 @@ app/index/controller/Test.php
 composer.phar
 app/test/
 vendor
+.DS_Store
