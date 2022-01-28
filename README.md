@@ -25,6 +25,7 @@
     * 多管理员管理
 * 定时清除码库
 * 支持mysql和redis两种方式存储码库（推荐redis，但是mysql还是必须的，只不过是使用redis临时存储数据）
+* 一键安装
 
 ## 代码仓库
 
@@ -37,7 +38,7 @@
 ## 安装方法
 ### 环境要求
 * Centos>=7
-* php>=7.3
+* php>=7.3(需删除这几个禁用函数：putenv/proc_open/)
 * mysql>=8
 ### 必要软件
 * crontab
@@ -48,6 +49,7 @@
 其它的请参考ThinkPhp官方文档
 
 网站目录请设置到public下
+- nginx
 ```nginx
 location / {
 	if (!-e $request_filename){
@@ -55,11 +57,24 @@ location / {
 	}
 }
 ```
+- caddy1
+- 建有将php连接配置设置为tpc带端口的，IP限制为127.0.0.1就安全了
 ```caddy1
 rewrite {
     to {path} {path}/ /index.php/{uri}
 }
 ```
+- apache
+```apache
+<IfModule mod_rewrite.c>
+Options +FollowSymlinks -Multiviews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?/$1 [QSA,PT,L]
+</IfModule>
+```
+
 ### 克隆项目
 ```gitexclude
 git clone https://github.com/yuanzhumc/CODE_TG_BOT
@@ -68,6 +83,8 @@ OR
 ```gitexclude
 git clone https://gitee.com/yuanzhumc/CODE_TG_BOT
 ```
+
+请将目录权限设置为777
 ### 安装项目
 cd到你的网站根目录，执行composer安装，或更新
 ```composer log
