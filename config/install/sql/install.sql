@@ -60,7 +60,7 @@ CREATE TABLE `cd_code_type` (
 -- Records of cd_code_type
 -- ----------------------------
 BEGIN;
-INSERT INTO `cd_code_type` VALUES (1, 3, 'Ym', 7, 5, 5, NULL, NULL);
+INSERT INTO `cd_code_type` VALUES (1, 3, 'Ym',0, 7, 5, 5, NULL, NULL);
 COMMIT;
 
 -- ----------------------------
