@@ -30,7 +30,7 @@ CREATE TABLE `cd_auth_tg_group` (
                                     `delete_time` int DEFAULT NULL,
                                     PRIMARY KEY (`id`),
                                     KEY `chat_id` (`chat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='授权群组';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='授权群组';
 
 -- ----------------------------
 -- Records of cd_auth_tg_group
@@ -54,7 +54,7 @@ CREATE TABLE `cd_code_type` (
                                 `create_time` int DEFAULT NULL,
                                 `update_time` int DEFAULT NULL,
                                 PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='助力码类型';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='助力码类型';
 
 -- ----------------------------
 -- Records of cd_code_type
@@ -261,11 +261,11 @@ CREATE TABLE `cd_system_command` (
                                      `command` varchar(100) NOT NULL COMMENT '命令名称',
                                      `description` varchar(300) DEFAULT NULL COMMENT '描述',
                                      `text` text COMMENT '自动回复内容',
-                                     `call_controller` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '命令指向控制器',
+                                     `call_controller` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '命令指向控制器',
                                      `call_action` varchar(1000) DEFAULT NULL COMMENT '命令指向方法',
                                      `create_time` int DEFAULT NULL,
                                      PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='命令表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='命令表';
 
 -- ----------------------------
 -- Records of cd_system_command
@@ -583,7 +583,7 @@ CREATE TABLE `cd_tg_user` (
                               `create_time` int DEFAULT NULL,
                               PRIMARY KEY (`id`),
                               UNIQUE KEY `tg_id` (`tg_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='tg用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='tg用户表';
 
 -- ----------------------------
 -- Records of cd_tg_user
@@ -600,12 +600,12 @@ CREATE TABLE `cd_tg_chat` (
                               `chat_username` varchar(1000) DEFAULT NULL COMMENT '聊天用户名',
                               `chat_type` varchar(255) DEFAULT NULL COMMENT '聊天方式',
                               `from_id` varchar(200) DEFAULT NULL COMMENT '发送者ID',
-                              `from_username` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '发送者用户名',
+                              `from_username` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '发送者用户名',
                               `text` text COMMENT '发送内容',
                               `original_data` text COMMENT '原始信息',
                               `create_time` int DEFAULT NULL COMMENT '创建时间',
                               PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='tg聊天列表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='tg聊天列表';
 -- ----------------------------
 -- Records of cd_tg_user
 -- ----------------------------
