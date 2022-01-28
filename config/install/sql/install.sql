@@ -84,7 +84,7 @@ CREATE TABLE `cd_system_admin` (
                                    PRIMARY KEY (`id`),
                                    UNIQUE KEY `username` (`username`) USING BTREE,
                                    KEY `phone` (`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='系统用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='系统用户表';
 
 -- ----------------------------
 -- Records of cd_system_admin
@@ -108,7 +108,7 @@ CREATE TABLE `cd_system_auth` (
                                   `delete_time` int DEFAULT NULL COMMENT '删除时间',
                                   PRIMARY KEY (`id`),
                                   UNIQUE KEY `title` (`title`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='系统权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='系统权限表';
 
 -- ----------------------------
 -- Records of cd_system_auth
@@ -129,7 +129,7 @@ CREATE TABLE `cd_system_auth_node` (
                                        PRIMARY KEY (`id`),
                                        KEY `index_system_auth_auth` (`auth_id`) USING BTREE,
                                        KEY `index_system_auth_node` (`node_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='角色与节点关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='角色与节点关系表';
 
 -- ----------------------------
 -- Records of cd_system_auth_node
@@ -293,7 +293,7 @@ CREATE TABLE `cd_system_config` (
                                     PRIMARY KEY (`id`),
                                     UNIQUE KEY `name` (`name`),
                                     KEY `group` (`group`)
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='系统配置表';
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='系统配置表';
 
 -- ----------------------------
 -- Records of cd_system_config
@@ -356,7 +356,7 @@ CREATE TABLE `cd_system_menu` (
                                   PRIMARY KEY (`id`),
                                   KEY `title` (`title`),
                                   KEY `href` (`href`)
-) ENGINE=InnoDB AUTO_INCREMENT=258 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='系统菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=258 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='系统菜单表';
 
 -- ----------------------------
 -- Records of cd_system_menu
@@ -394,7 +394,7 @@ CREATE TABLE `cd_system_node` (
                                   `update_time` int DEFAULT NULL COMMENT '更新时间',
                                   PRIMARY KEY (`id`),
                                   KEY `node` (`node`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='系统节点表';
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='系统节点表';
 
 -- ----------------------------
 -- Records of cd_system_node
@@ -524,7 +524,7 @@ CREATE TABLE `cd_system_quick` (
                                    `update_time` int DEFAULT NULL COMMENT '更新时间',
                                    `delete_time` int DEFAULT NULL COMMENT '删除时间',
                                    PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='系统快捷入口表';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='系统快捷入口表';
 
 -- ----------------------------
 -- Records of cd_system_quick
@@ -561,7 +561,7 @@ CREATE TABLE `cd_system_uploadfile` (
                                         PRIMARY KEY (`id`),
                                         KEY `upload_type` (`upload_type`),
                                         KEY `original_name` (`original_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=316 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT COMMENT='上传文件表';
+) ENGINE=InnoDB AUTO_INCREMENT=316 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT='上传文件表';
 
 -- ----------------------------
 -- Records of cd_system_uploadfile
