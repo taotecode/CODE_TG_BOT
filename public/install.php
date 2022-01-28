@@ -132,7 +132,7 @@ if (isAjax()) {
     if ($install !== true) {
         $data = [
             'code' => 0,
-            'msg'  => '系统安装失败：' . $install,
+            'msg'  => '系统安装失败：' . json_encode($install),
         ];
         die(json_encode($data));
     }
@@ -268,7 +268,7 @@ function install($username, $password, $config, $adminUrl)
         Db::commit();
     } catch (\Exception $e) {
         Db::rollback();
-        return $e->getMessage();
+        return $e;
     }
     return true;
 }
