@@ -132,7 +132,8 @@ if (isAjax()) {
     if ($install !== true) {
         $data = [
             'code' => 0,
-            'msg'  => '系统安装失败：' . json_encode($install),
+            'msg'  => '系统安装失败：' . $install->getMessage(),
+            'error'=>$install,
         ];
         die(json_encode($data));
     }
