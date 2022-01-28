@@ -146,7 +146,8 @@ class Telegram extends ApiController
             'text'=>$messageData,
             'original_data'=>json_encode($input),
         ]);
-        return 'true';
+
+        return $this->sendMessages($chatId,"您发送的信息为：".$messageData,$messageId);
     }
 
 

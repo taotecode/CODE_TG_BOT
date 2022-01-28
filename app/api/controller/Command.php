@@ -52,17 +52,6 @@ class Command extends ApiController
     }
 
     /**
-     * 自动回复内容
-     * @param null $messageData
-     * @param array $input
-     * @param array $commandData
-     * @return array|string
-     */
-    public function message($messageData=null,$input=[],$commandData=[]){
-        return ['md'=>true,'text'=>$commandData->text];
-    }
-
-    /**
      * 自定义码命令
      * @param null $messageData
      * @param array $input
