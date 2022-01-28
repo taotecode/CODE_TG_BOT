@@ -136,6 +136,8 @@ if (isAjax()) {
             'error_code'=>$install->getCode(),
             'error_file'=>$install->getFile(),
             'error_line'=>$install->getLine(),
+            'error_trace'=>$install->getTrace(),
+            'error_previous'=>$install->getPrevious(),
             'error_trace_as_string'=>$install->getTraceAsString(),
         ];
         die(json_encode($data));
