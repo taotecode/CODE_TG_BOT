@@ -273,8 +273,12 @@ CREATE TABLE `cd_system_command` (
 BEGIN;
 INSERT INTO `cd_system_command` VALUES (1, 'test', '这是一条测试命令', NULL, 'app\\api\\controller\\Command', 'test', NULL);
 INSERT INTO `cd_system_command` VALUES (2, 'help', '使用帮助', '支持车型：种豆、东东农场、东东工厂、京喜工厂、东东萌宠、闪购盲盒、狂欢城、财富岛、健康。\n例:\n/pet code111\n或\n/pet code111&code222&code333\n欢迎订阅本频道，获取更多消息。\n', 'app\\api\\controller\\Command', 'message', NULL);
-INSERT INTO `cd_system_command` VALUES (3, 'api', 'API接口对接文档', '请前往GitHub查看wiki \n https://github.com/yuanzhumc/CODE_TG_BOT/wiki/API%E5%AF%B9%E6%8E%A5%E6%96%87%E6%A1%A3', 'app\\api\\controller\\Command', 'message', NULL);
-INSERT INTO `cd_system_command` VALUES (4, 'pet', '提交东东萌宠', NULL, 'app\\api\\controller\\Command', 'code', NULL);
+INSERT INTO `cd_system_command` VALUES (3, 'codelist', '我的码库', NULL,'app\\api\\controller\\Command','codeList',NULL);
+INSERT INTO `cd_system_command` VALUES (4, 'bind', '绑定JD账号', NULL,'app\\api\\controller\\Command','bind',NULL);
+INSERT INTO `cd_system_command` VALUES (5, 'delbind', '解绑JD账号', NULL,'app\\api\\controller\\Command','delBind',NULL);
+INSERT INTO `cd_system_command` VALUES (6, 'codetotal', '码库统计', NULL,'app\\api\\controller\\Command','codeTotal',NULL);
+INSERT INTO `cd_system_command` VALUES (7, 'api', 'API接口对接文档', '请前往GitHub查看wiki \n https://github.com/yuanzhumc/CODE_TG_BOT/wiki/API%E5%AF%B9%E6%8E%A5%E6%96%87%E6%A1%A3', 'app\\api\\controller\\Command', 'message', NULL);
+INSERT INTO `cd_system_command` VALUES (8, 'pet', '提交东东萌宠', NULL, 'app\\api\\controller\\Command', 'code', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -610,6 +614,21 @@ CREATE TABLE `cd_tg_chat` (
 -- Records of cd_tg_user
 -- ----------------------------
 BEGIN;
-
+COMMIT;
+-- ----------------------------
+-- Table structure for cd_auth_tg_bind
+-- ----------------------------
+CREATE TABLE `cd_auth_tg_bind` (
+                                `id` BIGINT NOT NULL AUTO_INCREMENT ,
+                                `chat_id` VARCHAR(200) NULL DEFAULT NULL COMMENT '群组ID' ,
+                                `tg_id` VARCHAR(200) NULL DEFAULT NULL COMMENT '用户ID' ,
+                                `bind` TEXT NULL DEFAULT NULL COMMENT '绑定数据' ,
+                                `create_time` INT NULL DEFAULT NULL ,
+                                PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT = '用户绑定表';
+-- ----------------------------
+-- Records of cd_auth_tg_bind
+-- ----------------------------
+BEGIN;
 COMMIT;
 SET FOREIGN_KEY_CHECKS = 1;

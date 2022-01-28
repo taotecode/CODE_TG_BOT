@@ -95,6 +95,44 @@ class CodeTableService
     }
 
     /**
+     * 查询到所有数据
+     * @param $where
+     * @param $type
+     * @return array|string|\think\Collection|Db[]
+     */
+    public function queryAll($where,$type){
+        Db::startTrans();
+        try {
+            $this->detectTable();
+            $data=Db::table($this->tableName)->where($where)->select();
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            return $e->getMessage();
+        }
+        return $data;
+    }
+
+    /**
+     * 统计所有数据
+     * @param $where
+     * @param $type
+     * @return int|string
+     */
+    public function count($where,$type){
+        Db::startTrans();
+        try {
+            $this->detectTable();
+            $data=Db::table($this->tableName)->where($where)->count();
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            return $e->getMessage();
+        }
+        return $data;
+    }
+
+    /**
      * 保存数据
      * @param $data
      * @param $type
